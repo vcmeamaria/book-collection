@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>My Collection</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body class="has-bg">
+    <div class="bg-collage"></div>
+    <div class="bg-overlay"></div>
+
+    <div class="topbar">
+      <div class="brand">Maria’s Library</div>
+      <div class="nav">
+        <a href="/home">Home</a>
+        <a href="/add">Add book</a>
+      </div>
+    </div>
+
+    <div class="container">
+      <h1 class="page-title">My Collection</h1>
+
+      <div class="controls">
+        <span style="color: var(--pink); font-weight: 900;">Sort by:</span>
+        <select onchange="location = '/collection?sort=' + this.value;">
+          <option value="genre" {% if sort=='genre' %}selected{% endif %}>Genre</option>
+          <option value="title" {% if sort=='title' %}selected{% endif %}>Alphabetically</option>
+          <option value="author" {% if sort=='author' %}selected{% endif %}>By author (first name)</option>
+          <option value="date" {% if sort=='date' %}selected{% endif %}>By date added</option>
+        </select>
+      </div>
+
+      <div class="grid">
+        {% for b in books %}
+          <div class="book" data-id="{{ b['id'] }}">
+            <div class="cover-wrap">
+              {% if b["cover_filename"] %}
+                <img src="/static/covers/{{ b['cover_filename'] }}" alt="Cover" />
+              {% else %}
+                <div class="fallback">No cover</div>
+              {% endif %}
+
+              <div class="hover-note">
+                {{ b["hover_message"] or "Right-click to edit ✨" }}
+              </div>
+            </div>
+
+            <div class="meta">
+              <div class="title">{{ b["title"] }}</div>
+              <div class="author">{{ b["author"] }}</div>
+              <div style="opacity:.7;">{{ b["genre"] }}</div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <script>
+      document.querySelectorAll(".book").forEach((card) => {
+        card.addEventListener("contextmenu", (e) => {
+          e.preventDefault();
+          const id = card.dataset.id;
+          window.location.href = `/book/${id}/edit`;
+        });
+      });
+    </script>
+  </body>
+</html>

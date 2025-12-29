@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Home</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+
+  <body class="has-bg">
+    <div class="bg-collage"></div>
+    <div class="bg-overlay"></div>
+
+    <div class="topbar">
+      <div class="brand">Maria’s Library</div>
+      <div class="nav">
+        <a href="/add">Add book</a>
+        <a href="/collection">Collection</a>
+      </div>
+    </div>
+
+    <div class="center">
+      <div class="big">
+        <p class="home-total">
+          You have a total of <span class="home-total-number">{{ total }}</span> books in your library
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

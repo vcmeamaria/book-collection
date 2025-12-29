@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Edit Book</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body class="has-bg">
+    <div class="bg-collage"></div>
+    <div class="bg-overlay"></div>
+
+    <div class="topbar">
+      <div class="brand">Maria’s Library</div>
+      <div class="nav">
+        <a href="/collection">Collection</a>
+        <a href="/add">Add book</a>
+      </div>
+    </div>
+
+    <div class="container">
+      <h1 class="page-title">Edit Book</h1>
+
+      <form class="form-card" method="post" action="/book/{{ book['id'] }}/edit" enctype="multipart/form-data">
+        <div class="field">
+          <label>Book title</label>
+          <input name="title" value="{{ book['title'] }}" required />
+        </div>
+
+        <div class="field">
+          <label>Book author</label>
+          <input name="author" value="{{ book['author'] }}" required />
+        </div>
+
+        <div class="field">
+          <label>Book edition</label>
+          <input name="edition" value="{{ book['edition'] or '' }}" />
+        </div>
+
+        <div class="field">
+          <label>Book genre</label>
+          <select name="genre">
+            {% for g in genres %}
+              <option value="{{ g }}" {% if book['genre'] == g %}selected{% endif %}>{{ g }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Hover message</label>
+          <input name="hover_message" value="{{ book['hover_message'] or '' }}" />
+        </div>
+
+        <div class="field">
+          <label>Replace cover (optional)</label>
+          <input type="file" name="cover" accept="image/*" />
+        </div>
+
+        <button class="btn" type="submit">Save changes</button>
+        <a class="btn btn-dark" href="/collection">Back</a>
+      </form>
+
+      <form method="post" action="/book/{{ book['id'] }}/delete" class="danger-zone">
+        <button class="btn btn-danger" type="submit">Delete book</button>
+      </form>
+    </div>
+  </body>
+</html>
